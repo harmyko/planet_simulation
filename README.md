@@ -8,7 +8,7 @@ Galutinis projekto tikslas yra sukurti aplinką, kuri simuliuotų Saulės sistem
 - Kas būtų, jei į Saulės orbitą staiga įskirstų milžiniškas asteroidas ir judėtų Žemės link.
 - ir t.t.
 
-## Pirmas etapas (2025.03.07)
+## M1 - pirmasis etapas (2025.03.07)
 
 Atlikdamas šią užduotį, sukūriau **klasę** Planet.cpp, kuri apibrėžia planetą su jai būdingais laukais ir metodais. 
 
@@ -36,4 +36,41 @@ Programa gali būti paleidžiama nuėjus į projekto katalogą su terminalu ir p
 ```
 make
 ./PlanetSimulation.exe
+```
+
+## M2 - antrasis etapas (2025.04.04)
+
+### Nauji iššūkiai ir sprendimai
+Na, čia jau pradeda kilti tikras kosminis chaosas! Šiame etape nusprendžiau pasinerti į C++ gilumą ir pritaikyti **PIMPL** (Pointer to IMPLementation) idiomą. Kas gi tai? Tai paprasčiausiai reiškia, kad paslėpiau planetų duomenis į atskirą **PlanetImpl** klasę ir viską valdo šios klasės rodyklė. O kas iš to? Ogi mažiau priklausomybės nuo antrinių failų ir patogesnė klasės struktūra!
+
+### Kodėl PIMPL?
+Puikus klausimas! Pirmiausia, tai padeda geriau susitvarkyti su priklausomybėmis, nes PlanetImpl klasė gali būti **atskira nuo pagrindinės** Planet klasės. Tai taip pat leidžia lengvai keisti planetų implementaciją, nieko nekeičiant header faile. Be to, tai turi magišką poveikį kompiliavimo laikui, nes bet kokie pokyčiai PlanetImpl **nebepriklauso** nuo header failo.
+
+### Klaidų valdymas
+Kaipgi be klaidų? Jei mano planetos masė yra neigiama, tai ji tiesiog negali egzistuoti! Taigi, **sukūriau naują PlanetException klasę**, kuri išmeta išimtį, jei kas nors bando priskirti neigiamą vertę. Tai tikrai geras būdas užtikrinti, kad mano planetos liks stabilios ir neperžengs fizikos dėsnių!
+
+### Dinamika
+Kalbant apie dinamines planetas, čia irgi turėjau pasirinkti – naudoti **raw pointers** ar **unique_ptr**. Juk, kaip tikriems kosmoso tyrinėtojams, mums reikia pasirinkti tarp modernių ir šiek tiek senesnių metodų. Pirmiausia parašiau versiją su raw pointers, nes aš tą mėgstu (ir atsimenu visus tuos laikus, kai dar nesinaudojome išmaniosiomis rodyklėmis). O vėliau įdėjau ir unique_ptr versiją – juk niekada nepakenks šiek tiek daugiau šiuolaikinės C++ magijos, ar ne? Taip pat, papildomi taškai taip pat skamba gundančiai!
+
+### Programos paleidimas
+
+Programa, nuėjus terminalu į projekto katalogą, gali būti paleidžiama keliais būdais:
+
+1. Sukuriant testinės programos versiją pasinaudojant moduliu, kuris **nenaudoja** išmaniųjų rodyklių:
+```
+make raw
+./PlanetRawPtrTest.exe
+```
+
+2. Sukuriant testinės programos versiją pasinaudojant moduliu, kurio veikimas remiasi moderniomis C++ funkcijomis ir **panaudoja išmaniasias rodykles**:
+```
+make unique
+./PlanetUniquePtrTest.exe
+```
+
+3. Sukuriant tiek pirmame, tiek antrame punkte paminėtus modulius bei programas:
+```
+make
+./PlanetRawPtrTest.exe
+./PlanetUniquePtrTest.exe
 ```
