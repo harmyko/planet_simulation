@@ -29,7 +29,7 @@ Norėdamas pademonstruoti sukurtos klasės funkcionalumą, `main()` funkcijoje:
 
 Visi šie žingsniai leidžia išbandyti ir įvertinti mano sukurtos planetų simuliacijos veikimą.
 
-### Programos paleidimas
+### Programos paleidimas (M1 ver.)
 
 Programa gali būti paleidžiama nuėjus į projekto katalogą su terminalu ir paleidus šias komandas:
 
@@ -52,7 +52,7 @@ Kaipgi be klaidų? Jei mano planetos masė yra neigiama, tai ji tiesiog negali e
 ### Dinamika
 Kalbant apie dinamines planetas, čia irgi turėjau pasirinkti – naudoti **raw pointers** ar **unique_ptr**. Juk, kaip tikriems kosmoso tyrinėtojams, mums reikia pasirinkti tarp modernių ir šiek tiek senesnių metodų. Pirmiausia parašiau versiją su raw pointers, nes aš tą mėgstu (ir atsimenu visus tuos laikus, kai dar nesinaudojome išmaniosiomis rodyklėmis). O vėliau įdėjau ir unique_ptr versiją – juk niekada nepakenks šiek tiek daugiau šiuolaikinės C++ magijos, ar ne? Taip pat, papildomi taškai taip pat skamba gundančiai!
 
-### Programos paleidimas
+### Programos paleidimas (M2 ver.)
 
 Programa, nuėjus terminalu į projekto katalogą, gali būti paleidžiama keliais būdais:
 
