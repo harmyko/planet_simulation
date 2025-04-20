@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <SFML/System.hpp>
 
 #include "planet.h"
 #include "planet_exception.h"
@@ -13,15 +14,15 @@ public:
     std::string name;
     double mass;
     double radius;
-    double distanceFromSun;
-    double velocity;
+    sf::Vector2f position;
+    sf::Vector2f velocity;
 
-    PlanetImpl(std::string name, double mass, double radius, double distanceFromSun, double velocity)
+    PlanetImpl(std::string name, double mass, double radius, sf::Vector2f position, sf::Vector2f velocity)
     {
         setName(name);
         setMass(mass);
         setRadius(radius);
-        setDistanceFromSun(distanceFromSun);
+        setPosition(position);
         setVelocity(velocity);
 
         id = ++objectCount;
@@ -32,7 +33,7 @@ public:
         setName(other.name);
         setMass(other.mass);
         setRadius(other.radius);
-        setDistanceFromSun(other.distanceFromSun);
+        setPosition(other.position);
         setVelocity(other.velocity);
 
         id = ++objectCount;
@@ -68,17 +69,12 @@ public:
         this->radius = radius;
     }
 
-    void setDistanceFromSun(double distanceFromSun)
+    void setPosition(sf::Vector2f position)
     {
-        if (distanceFromSun < 0)
-        {
-            throw PlanetException("Planet's distance from Sun cannot be negative!");
-        }
-
-        this->distanceFromSun = distanceFromSun;
+        this->position = position;
     }
 
-    void setVelocity(double velocity)
+    void setVelocity(sf::Vector2f velocity)
     {
         this->velocity = velocity;
     }
@@ -88,12 +84,12 @@ int Planet::PlanetImpl::objectCount = 0;
 
 Planet::Planet()
 {
-    impl = new PlanetImpl("Unnamed", 0, 0, 0, 0);
+    impl = new PlanetImpl("Unnamed", 0, 0, {0, 0}, {0, 0});
 }
 
-Planet::Planet(std::string name, double mass, double radius, double distance, double velocity)
+Planet::Planet(std::string name, double mass, double radius, sf::Vector2f position, sf::Vector2f velocity)
 {
-    impl = new PlanetImpl(name, mass, radius, distance, velocity);
+    impl = new PlanetImpl(name, mass, radius, position, velocity);
 }
 
 Planet::Planet(const Planet &other)
@@ -122,13 +118,13 @@ void Planet::printInfo(std::ostream &output) const
             << "Name: " << impl->name << "\n"
             << "Mass: " << impl->mass << " kg\n"
             << "Radius: " << impl->radius << " km\n"
-            << "Distance from Sun: " << impl->distanceFromSun << " km\n"
-            << "Velocity: " << impl->velocity << " m/s\n\n";
+            << "Position: (" << impl->position.x << ", " << impl->position.y << ") m/s\n\n"
+            << "Velocity: (" << impl->velocity.x << ", " << impl->velocity.y << ") m/s\n\n";
 }
 
 void Planet::changeVelocity(double deltaV)
 {
-    impl->velocity += deltaV;
+    
 }
 
 int Planet::getId() const
@@ -149,12 +145,13 @@ double Planet::getRadius() const
     return impl->radius;
 
 }
-double Planet::getDistanceFromSun() const
+
+sf::Vector2f Planet::getPosition() const
 {
-    return impl->distanceFromSun;
+    return impl->position;
 }
 
-double Planet::getVelocity() const
+sf::Vector2f Planet::getVelocity() const
 {
     return impl->velocity;
 }
@@ -179,12 +176,13 @@ void Planet::setRadius(double radius)
     impl->setRadius(radius);
 
 }
-void Planet::setDistanceFromSun(double distanceFromSun)
+
+void Planet::setPosition(sf::Vector2f position)
 {
-    impl->setDistanceFromSun(distanceFromSun);
+    impl->setPosition(position);
 }
 
-void Planet::setVelocity(double velocity)
+void Planet::setVelocity(sf::Vector2f velocity)
 {
     impl->setVelocity(velocity);
 }
