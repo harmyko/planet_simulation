@@ -3,8 +3,8 @@
 #include <fstream>
 #include <SFML/System.hpp>
 
-#include "planet.h"
-#include "planet_exception.h"
+#include "space_object.h"
+#include "space_object_exception.h"
 
 int main()
 {
