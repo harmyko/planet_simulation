@@ -18,8 +18,10 @@ public:
     SpaceObject();
     SpaceObject(std::string name, double mass, double radius, sf::Vector2f position, sf::Vector2f velocity = {0, 0});
     SpaceObject(const SpaceObject &other);
-    SpaceObject &operator=(const SpaceObject &other);
     ~SpaceObject();
+
+    // Operators
+    SpaceObject &operator=(const SpaceObject &other);
 
     // Methods
     void print_info(std::ostream &output) const;

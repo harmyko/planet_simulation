@@ -45,6 +45,7 @@ public:
         --object_count;
     }
 
+    // Setters responsible for input validation
     void set_name(std::string name)
     {
         this->name = name;

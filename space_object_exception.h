@@ -4,8 +4,10 @@
 #include <stdexcept>
 #include <string>
 
-class SpaceObjectException : public std::runtime_error {
+class SpaceObjectException : public std::runtime_error
+{
 public:
+
     explicit SpaceObjectException(const std::string &message)
         : std::runtime_error(message) {}
 };
