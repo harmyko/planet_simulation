@@ -12,7 +12,7 @@ public:
     DynamicMovementStrategy(float gravity)
         : IMovementStrategy(gravity) {}
 
-    void apply_velocity(SpaceObject &target, const std::vector<SpaceObject> &universe) const override;
+    void apply_velocity(SpaceObject *target, const std::vector<const SpaceObject *> &others, const float delta_time) const override;
 };
 
 #endif // DYNAMIC_MOVEMENT_STRATEGY_H

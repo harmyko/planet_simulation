@@ -18,7 +18,7 @@ public:
     IMovementStrategy(float gravity) : G(gravity) {}
     virtual ~IMovementStrategy() = default;
 
-    virtual void apply_velocity(SpaceObject &target, const std::vector<SpaceObject> &others) const = 0;
+    virtual void apply_velocity(SpaceObject *target, const std::vector<const SpaceObject *> &others, const float delta_time) const = 0;
 };
 
 #endif // I_MOVEMENT_STRATEGY_H
