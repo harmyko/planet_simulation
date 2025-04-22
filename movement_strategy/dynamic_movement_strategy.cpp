@@ -1,12 +1,15 @@
+#include <cmath>
+#include <iostream>
+
 #include "dynamic_movement_strategy.h"
 
-#include <cmath>
-
-DynamicMovementStrategy::DynamicMovementStrategy(float gravity)
-    : IMovementStrategy(gravity) {}
+const float MIN_DISTANCE_SQUARED = 1.0f;
+const float MAX_ACCELERATION = 1e5f;
 
 void DynamicMovementStrategy::apply_velocity(SpaceObject &target, const std::vector<SpaceObject> &universe) const
 {
+    //std::cout << "(" << target.get_position().x << ", " << target.get_position().y << ")\n";
+
     sf::Vector2f total_force{0, 0};
 
     for (const auto &other : universe)
@@ -20,9 +23,10 @@ void DynamicMovementStrategy::apply_velocity(SpaceObject &target, const std::vec
         sf::Vector2f position_difference = other.get_position() - target.get_position();
         float distance_squared = position_difference.x * position_difference.x + position_difference.y * position_difference.y;
 
-        // Skip division by zero to avoid undefined behaviour
-        if (distance_squared == 0) 
+        // Skip instances when objects are very close to eachother to avoid undefined behaviour
+        if (distance_squared < MIN_DISTANCE_SQUARED) 
         {
+            std::cerr << "Distance too small, skipping " << target.get_name() << " & " << other.get_name() << "\n";
             continue;
         }
         
@@ -37,16 +41,15 @@ void DynamicMovementStrategy::apply_velocity(SpaceObject &target, const std::vec
     }
 
     // Newton's second law: force = mass * acceleration => acceleration = force / mass
-    sf::Vector2f acceleration = total_force / target.get_mass();
+    sf::Vector2f acceleration = sf::Vector2f(total_force.x / target.get_mass(), total_force.y / target.get_mass());
     sf::Vector2f new_velocity = target.get_velocity() + acceleration;
+
+    if (std::abs(acceleration.x) > MAX_ACCELERATION || std::abs(acceleration.y) > MAX_ACCELERATION) {
+        std::cerr << "Acceleration too high, skipping velocity update for " << target.get_name() << "\n";
+        return;
+    }
 
     // Update target's velocity with the newly computed value
     target.set_velocity(new_velocity);
-}
-
-// Helper function to allow the division of a vector by a scalar value
-sf::Vector2f operator/(const sf::Vector2f& v, float scalar)
-{
-    return {v.x / scalar, v.y / scalar};
 }
 

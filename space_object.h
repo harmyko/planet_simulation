@@ -16,7 +16,7 @@ public:
 
     // Constructors and Deconstructor
     SpaceObject();
-    SpaceObject(std::string name, double mass, double radius, sf::Vector2f position, sf::Vector2f velocity = {0, 0});
+    SpaceObject(std::string name, double mass, double radius, sf::Vector2f position, sf::Vector2f velocity = {0, 0}, bool is_movable = true);
     SpaceObject(const SpaceObject &other);
     ~SpaceObject();
 
@@ -35,6 +35,7 @@ public:
     double get_radius() const;
     sf::Vector2f get_velocity() const;
     sf::Vector2f get_position() const;
+    bool is_movable() const;
 
     // Setters
     void set_name(std::string name);
@@ -42,6 +43,7 @@ public:
     void set_radius(double radius);
     void set_position(sf::Vector2f position);
     void set_velocity(sf::Vector2f velocity);
+    void set_movability(bool movable);
 };
 
 #endif // SPACE_OBJECT_H

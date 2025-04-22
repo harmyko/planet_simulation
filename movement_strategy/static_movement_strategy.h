@@ -9,7 +9,7 @@ private:
     sf::Vector2f new_velocity;
 
 public:
-    StaticMovementStrategy(sf::Vector2f velocity = {0, 0}, float gravity = GRAVITATIONAL_CONSTANT)
+    StaticMovementStrategy(float gravity, sf::Vector2f velocity = {0, 0})
         : IMovementStrategy(gravity), new_velocity(velocity) {}
 
     void apply_velocity(SpaceObject &target, const std::vector<SpaceObject> &) const override;

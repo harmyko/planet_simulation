@@ -17,14 +17,16 @@ public:
     double radius;
     sf::Vector2f position;
     sf::Vector2f velocity;
+    bool movable;
 
-    SpaceObjectImpl(std::string name, double mass, double radius, sf::Vector2f position, sf::Vector2f velocity)
+    SpaceObjectImpl(std::string name, double mass, double radius, sf::Vector2f position, sf::Vector2f velocity, bool movable)
     {
         set_name(name);
         set_mass(mass);
         set_radius(radius);
         set_position(position);
         set_velocity(velocity);
+        set_movability(movable);
 
         id = ++object_count;
     }
@@ -36,6 +38,7 @@ public:
         set_radius(other.radius);
         set_position(other.position);
         set_velocity(other.velocity);
+        set_movability(other.movable);
 
         id = ++object_count;
     }
@@ -80,6 +83,11 @@ public:
     {
         this->velocity = velocity;
     }
+
+    void set_movability(bool movable)
+    {
+        this->movable = movable;
+    }
 };
 
 int SpaceObject::SpaceObjectImpl::object_count = 0;
@@ -87,12 +95,12 @@ int SpaceObject::SpaceObjectImpl::object_count = 0;
 // Constructors and destructor
 SpaceObject::SpaceObject()
 {
-    impl = new SpaceObjectImpl("unnamed", 0, 0, {0, 0}, {0, 0});
+    impl = new SpaceObjectImpl("unnamed", 0, 0, {0, 0}, {0, 0}, false);
 }
 
-SpaceObject::SpaceObject(std::string name, double mass, double radius, sf::Vector2f position, sf::Vector2f velocity)
+SpaceObject::SpaceObject(std::string name, double mass, double radius, sf::Vector2f position, sf::Vector2f velocity, bool movable)
 {
-    impl = new SpaceObjectImpl(name, mass, radius, position, velocity);
+    impl = new SpaceObjectImpl(name, mass, radius, position, velocity, movable);
 }
 
 SpaceObject::SpaceObject(const SpaceObject &other)
@@ -139,6 +147,8 @@ double          SpaceObject::get_mass()        const { return impl->mass; }
 double          SpaceObject::get_radius()      const { return impl->radius; }
 sf::Vector2f    SpaceObject::get_position()    const { return impl->position; }
 sf::Vector2f    SpaceObject::get_velocity()    const { return impl->velocity; }
+bool            SpaceObject::is_movable()      const { return impl->movable; }
+
 
 // Setters
 void SpaceObject::set_name(std::string name)          { impl->set_name(name); }
@@ -146,3 +156,4 @@ void SpaceObject::set_mass(double mass)               { impl->set_mass(mass); }
 void SpaceObject::set_radius(double radius)           { impl->set_radius(radius); }
 void SpaceObject::set_position(sf::Vector2f position) { impl->set_position(position); }
 void SpaceObject::set_velocity(sf::Vector2f velocity) { impl->set_velocity(velocity); }
+void SpaceObject::set_movability(bool movable)        { impl->set_movability(movable); }

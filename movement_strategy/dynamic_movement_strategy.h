@@ -9,7 +9,7 @@ class DynamicMovementStrategy : public IMovementStrategy
 {
 public:
 
-    DynamicMovementStrategy(float gravity = GRAVITATIONAL_CONSTANT)
+    DynamicMovementStrategy(float gravity)
         : IMovementStrategy(gravity) {}
 
     void apply_velocity(SpaceObject &target, const std::vector<SpaceObject> &universe) const override;
