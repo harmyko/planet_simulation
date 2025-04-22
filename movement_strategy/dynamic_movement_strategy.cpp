@@ -3,7 +3,7 @@
 #include <cmath>
 
 DynamicMovementStrategy::DynamicMovementStrategy(float gravity)
-    : G(gravity) {}
+    : IMovementStrategy(gravity) {}
 
 void DynamicMovementStrategy::apply_velocity(SpaceObject &target, const std::vector<SpaceObject> &universe) const
 {
@@ -36,7 +36,7 @@ void DynamicMovementStrategy::apply_velocity(SpaceObject &target, const std::vec
         total_force += force;
     }
 
-    // Newtons second law: force = mass * acceleration => acceleration = force / mass
+    // Newton's second law: force = mass * acceleration => acceleration = force / mass
     sf::Vector2f acceleration = total_force / target.get_mass();
     sf::Vector2f new_velocity = target.get_velocity() + acceleration;
 
