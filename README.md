@@ -2,11 +2,7 @@
 
 ## Projekto tikslas: 
 
-Galutinis projekto tikslas yra sukurti aplinką, kuri simuliuotų Saulės sistemos planetų judėjimą pasikliaudama fizikos formulėmis. Visa tai bus vizualiai perteikiama vartotojui, taip pat jam bus suteikiama galimybė manipuliuoti aplinką sukuriant įvairiausius hipotetinius scenarijus, pvz.:
-
-- Kas būtų, jei Saulės masė akimirksniu padidėtų 100 kartų.
-- Kas būtų, jei į Saulės orbitą staiga įskirstų milžiniškas asteroidas ir judėtų Žemės link.
-- ir t.t.
+Galutinis projekto tikslas yra sukurti modulį, kurio dėka būtų paprasta sukurti aplinką, kuri simuliuotų Saulės sistemos planetų, ar bet kokių kitų dangaus objektų, judėjimą.
 
 ## M1 - pirmasis etapas (2025.03.07)
 
