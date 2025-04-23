@@ -9,7 +9,7 @@
 const int WINDOW_WIDTH = 1900;
 const int WINDOW_HEIGHT = 900;
 const int TILE_SIZE = 100;
-const int MIN_OBJECTS = 20;
+const int MIN_OBJECTS = 30;
 const int MAX_OBJECTS_DIVISOR = 5; // Total available positions get divided by this number to mitigate the max possible amount of objects
 
 const int TIME_SCALE = 10;
@@ -78,17 +78,17 @@ int main()
             strategy->apply_velocity(objects[i], others, delta_time);
         }
 
-        for (size_t i = 0; i < objects.size(); ++i)
+        size_t i = 0;
+        while (i < objects.size())
         {
             sf::Vector2f position = objects[i]->get_position();
             sf::Vector2f velocity = objects[i]->get_velocity();
             position += velocity * delta_time;
-
-            // Delete the object, it its position is outside the window
+        
             if (position.x > WINDOW_WIDTH + objects[i]->get_radius() ||
                 position.y > WINDOW_HEIGHT + objects[i]->get_radius() ||
                 position.x < -objects[i]->get_radius() ||
-                position.x < -objects[i]->get_radius())
+                position.y < -objects[i]->get_radius())
             {
                 delete objects[i];
                 delete shapes[i];
@@ -99,8 +99,10 @@ int main()
             {
                 objects[i]->set_position(position);
                 shapes[i]->setPosition(position);
+                ++i;
             }
         }
+        
 
         window.clear();
 
