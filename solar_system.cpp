@@ -4,7 +4,6 @@
 
 #include "space_object.h"
 #include "movement_strategy/dynamic_movement_strategy.h"
-#include "movement_strategy/static_movement_strategy.h"
 
 const float SUN_RADIUS_SCALE =      12000.f;
 const float MERCURY_RADIUS_SCALE =  300.f;
