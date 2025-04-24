@@ -1,6 +1,6 @@
 #include <cmath>
 
-#include "dynamic_movement_strategy.hpp"
+#include "movement/dynamic.hpp"
 
 const float MIN_DISTANCE_SQUARED = 1.0f;
 const float MAX_ACCELERATION = 1e5f;

@@ -3,9 +3,6 @@
 #include <SFML/System.hpp>
 
 #include "space_object.hpp"
-#include "space_object_exception.hpp"
-#include "movement_strategy/dynamic_movement_strategy.hpp"
-#include "movement_strategy/static_movement_strategy.hpp"
 
 class SpaceObject::SpaceObjectImpl
 {

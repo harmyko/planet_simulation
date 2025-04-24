@@ -1,5 +1,5 @@
-#ifndef DYNAMIC_MOVEMENT_STRATEGY_HPP
-#define DYNAMIC_MOVEMENT_STRATEGY_HPP
+#ifndef DYNAMIC_HPP
+#define DYNAMIC_HPP
 
 #include "i_movement_strategy.hpp"
 
@@ -41,4 +41,4 @@ public:
     void update_position(const float delta_time) override;
 };
 
-#endif // DYNAMIC_MOVEMENT_STRATEGY_HPP
+#endif // DYNAMIC_HPP

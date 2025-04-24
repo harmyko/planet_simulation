@@ -1,5 +1,5 @@
-#ifndef STATIC_MOVEMENT_STRATEGY_HPP
-#define STATIC_MOVEMENT_STRATEGY_HPP
+#ifndef STATIC_HPP
+#define STATIC_HPP
 
 #include "i_movement_strategy.hpp"
 
@@ -42,4 +42,4 @@ public:
 };
 
 
-#endif // STATIC_MOVEMENT_STRATEGY_HPP
+#endif // STATIC_HPP

@@ -1,5 +1,5 @@
-#ifndef SPACE_OBJECT_EXCEPTION_HPP
-#define SPACE_OBJECT_EXCEPTION_HPP
+#ifndef EXCEPTION_HPP
+#define EXCEPTION_HPP
 
 #include <stdexcept>
 #include <string>
@@ -23,4 +23,4 @@ public:
         : std::runtime_error(message) {}
 };
 
-#endif // SPACE_OBJECT_EXCEPTION_HPP
+#endif // EXCEPTION_HPP

@@ -4,7 +4,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "space_object.hpp"
-#include "movement_strategy/dynamic_movement_strategy.hpp"
+#include "movement/dynamic.hpp"
 
 const int WINDOW_WIDTH = 1900;
 const int WINDOW_HEIGHT = 900;

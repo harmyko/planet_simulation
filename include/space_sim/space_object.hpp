@@ -7,6 +7,10 @@
 #include <vector>
 #include <SFML/System.hpp>
 
+#include "exception.hpp"
+#include "movement/dynamic.hpp"
+#include "movement/static.hpp"
+
 class SpaceObject
 {
 private:

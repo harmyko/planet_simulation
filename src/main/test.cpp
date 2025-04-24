@@ -3,12 +3,9 @@
 #include <fstream>
  
 #include "space_object.hpp"
-#include "space_object_exception.hpp"
-#include "movement_strategy/dynamic_movement_strategy.hpp"
-#include "movement_strategy/static_movement_strategy.hpp"
 
-const std::string RESULTS_FILENAME = "test_results.txt";
-const std::string BINARY_FILENAME = "space_object.dat";
+const std::string RESULTS_FILENAME = "resources/test_results.txt";
+const std::string BINARY_FILENAME = "resources/space_object.dat";
 const float GRAVITATIONAL_CONSTANT = 6.67430e-11f;
 const float DELTA_TIME = 86400.0f;
 

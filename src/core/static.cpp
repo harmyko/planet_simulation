@@ -1,4 +1,4 @@
-#include "static_movement_strategy.hpp"
+#include "movement/static.hpp"
 
 void StaticMovementStrategy::update_velocity(const std::vector<const SpaceObject *> &others,
     const float gravitational_constant, const float delta_time)
