@@ -2,6 +2,8 @@
 #define SPACE_OBJECT_HPP
 
 #include <string>
+#include <iostream>
+#include <fstream>
 #include <vector>
 #include <SFML/System.hpp>
 
@@ -23,6 +25,8 @@ public:
 
     // Operators
     SpaceObject &operator=(const SpaceObject &other);
+    friend std::ofstream &operator<<(std::ofstream &out, const SpaceObject &obj);
+    friend std::ifstream &operator>>(std::ifstream &in, SpaceObject &obj);
 
     // Methods
     void print_info(std::ostream &output) const;

@@ -8,6 +8,7 @@
 #include "movement_strategy/static_movement_strategy.hpp"
 
 const std::string RESULTS_FILENAME = "test_results.txt";
+const std::string BINARY_FILENAME = "space_object.dat";
 const float GRAVITATIONAL_CONSTANT = 6.67430e-11f;
 const float DELTA_TIME = 86400.0f;
 
@@ -124,6 +125,22 @@ int main()
 
     std::cout << "Total active SpaceObjects after deletion: " << SpaceObject::get_object_count() << "\n\n";
     output_file << "Total active SpaceObjects after deletion: " << SpaceObject::get_object_count() << "\n\n";
+
+    std::cout << "Saving " << space_object_array[0].get_name() << " data in binary file named: " << BINARY_FILENAME << "\n";
+    output_file << "Saving " << space_object_array[0].get_name() << " data in binary file named: " << BINARY_FILENAME << "\n";
+    std::ofstream out(BINARY_FILENAME, std::ios::binary);
+    out << space_object_array[0];
+    out.close();
+
+    std::cout << "Writing data from " << BINARY_FILENAME << " to " << space_object_array[1].get_name() << "...\n";
+    output_file << "Writing data from " << BINARY_FILENAME << " to " << space_object_array[1].get_name() << "...\n";
+
+    std::ifstream in(BINARY_FILENAME, std::ios::binary);
+    in >> space_object_array[1];
+    in.close();
+
+    space_object_array[1].print_info(std::cout);
+    space_object_array[1].print_info(output_file);
     
     std::cout << "Successful try block:\n";
     output_file << "Successful try block:\n";

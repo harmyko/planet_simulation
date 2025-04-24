@@ -10,7 +10,6 @@
 class SpaceObject::SpaceObjectImpl
 {
 public:
-
     static int object_count;
 
     int id;
@@ -159,7 +158,7 @@ void SpaceObject::print_info(std::ostream &output) const
 }
 
 void SpaceObject::update_velocity(std::vector<const SpaceObject *> &others,
-    const float gravitational_constant, const float delta_time)
+                                  const float gravitational_constant, const float delta_time)
 {
     impl->movement_strategy->update_velocity(others, gravitational_constant, delta_time);
 }
@@ -170,20 +169,73 @@ void SpaceObject::update_position(const float delta_time)
 }
 
 // Getters
-int             SpaceObject::get_object_count()      { return SpaceObjectImpl::object_count; }
-int             SpaceObject::get_id()          const { return impl->id; }
-std::string     SpaceObject::get_name()        const { return impl->name; }
-double          SpaceObject::get_mass()        const { return impl->mass; }
-double          SpaceObject::get_radius()      const { return impl->radius; }
-sf::Vector2f    SpaceObject::get_position()    const { return impl->position; }
-sf::Vector2f    SpaceObject::get_velocity()    const { return impl->velocity; }
-bool            SpaceObject::is_movable()      const { return impl->movable; }
-
+int SpaceObject::get_object_count() { return SpaceObjectImpl::object_count; }
+int SpaceObject::get_id() const { return impl->id; }
+std::string SpaceObject::get_name() const { return impl->name; }
+double SpaceObject::get_mass() const { return impl->mass; }
+double SpaceObject::get_radius() const { return impl->radius; }
+sf::Vector2f SpaceObject::get_position() const { return impl->position; }
+sf::Vector2f SpaceObject::get_velocity() const { return impl->velocity; }
+bool SpaceObject::is_movable() const { return impl->movable; }
 
 // Setters
-void SpaceObject::set_name(std::string name)          { impl->set_name(name); }
-void SpaceObject::set_mass(double mass)               { impl->set_mass(mass); }
-void SpaceObject::set_radius(double radius)           { impl->set_radius(radius); }
+void SpaceObject::set_name(std::string name) { impl->set_name(name); }
+void SpaceObject::set_mass(double mass) { impl->set_mass(mass); }
+void SpaceObject::set_radius(double radius) { impl->set_radius(radius); }
 void SpaceObject::set_position(sf::Vector2f position) { impl->set_position(position); }
 void SpaceObject::set_velocity(sf::Vector2f velocity) { impl->set_velocity(velocity); }
-void SpaceObject::set_movability(bool movable)        { impl->set_movability(movable); }
+void SpaceObject::set_movability(bool movable) { impl->set_movability(movable); }
+
+std::ofstream &operator<<(std::ofstream &out, const SpaceObject &obj)
+{
+    const SpaceObject::SpaceObjectImpl &impl = *obj.impl;
+
+    out.write(reinterpret_cast<const char *>(&impl.id), sizeof(impl.id));
+    size_t name_length = impl.name.size();
+    out.write(reinterpret_cast<const char *>(&name_length), sizeof(name_length));
+    out.write(impl.name.c_str(), name_length);
+    out.write(reinterpret_cast<const char *>(&impl.mass), sizeof(impl.mass));
+    out.write(reinterpret_cast<const char *>(&impl.radius), sizeof(impl.radius));
+    out.write(reinterpret_cast<const char *>(&impl.position), sizeof(impl.position));
+    out.write(reinterpret_cast<const char *>(&impl.velocity), sizeof(impl.velocity));
+    out.write(reinterpret_cast<const char *>(&impl.movable), sizeof(impl.movable));
+
+    int strategy_type = (impl.movable) ? 1 : 0;
+    out.write(reinterpret_cast<const char *>(&strategy_type), sizeof(strategy_type));
+
+    return out;
+}
+
+std::ifstream &operator>>(std::ifstream &in, SpaceObject &obj)
+{
+    SpaceObject::SpaceObjectImpl &impl = *obj.impl;
+
+    in.read(reinterpret_cast<char *>(&impl.id), sizeof(impl.id));
+    size_t name_length;
+    in.read(reinterpret_cast<char *>(&name_length), sizeof(name_length));
+
+    char *name_buffer = new char[name_length + 1];
+    in.read(name_buffer, name_length);
+    name_buffer[name_length] = '\0';
+    impl.name = name_buffer;
+    delete[] name_buffer;
+
+    in.read(reinterpret_cast<char *>(&impl.mass), sizeof(impl.mass));
+    in.read(reinterpret_cast<char *>(&impl.radius), sizeof(impl.radius));
+    in.read(reinterpret_cast<char *>(&impl.position), sizeof(impl.position));
+    in.read(reinterpret_cast<char *>(&impl.velocity), sizeof(impl.velocity));
+    in.read(reinterpret_cast<char *>(&impl.movable), sizeof(impl.movable));
+
+    int strategy_type;
+    in.read(reinterpret_cast<char *>(&strategy_type), sizeof(strategy_type));
+    if (strategy_type == 1)
+    {
+        impl.movement_strategy = new DynamicMovementStrategy(&impl.mass, &impl.radius, &impl.position, &impl.velocity);
+    }
+    else
+    {
+        impl.movement_strategy = new StaticMovementStrategy(&impl.mass, &impl.radius, &impl.position, &impl.velocity);
+    }
+
+    return in;
+}
