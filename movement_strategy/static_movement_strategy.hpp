@@ -5,14 +5,14 @@
 
 class StaticMovementStrategy : public IMovementStrategy
 {
-private:
-    sf::Vector2f new_velocity;
-
 public:
-    StaticMovementStrategy(std::shared_ptr<float> gravity, sf::Vector2f velocity = {0, 0})
-        : IMovementStrategy(gravity), new_velocity(velocity) {}
 
-    void update_velocity(SpaceObject *target, const std::vector<const SpaceObject* > &others, const float delta_time) const override;
+    StaticMovementStrategy(double *mass_ptr, double *radius_ptr, sf::Vector2f *position_ptr, sf::Vector2f *velocity_ptr)
+        : IMovementStrategy(mass_ptr, radius_ptr, position_ptr, velocity_ptr) {}
+
+    void update_velocity(const std::vector<const SpaceObject* > &others,
+        const float gravitational_constant, const float delta_time) override;
+    void update_position(const float delta_time) override;
 };
 
 

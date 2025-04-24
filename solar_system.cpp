@@ -1,9 +1,7 @@
-#include <iostream>
 #include <SFML/Graphics.hpp>
-#include <vector>
+#include <iostream>
 
 #include "space_object.hpp"
-#include "movement_strategy/dynamic_movement_strategy.hpp"
 
 const float SUN_RADIUS_SCALE =      12000.f;
 const float MERCURY_RADIUS_SCALE =  300.f;
@@ -29,9 +27,9 @@ const float TIME_SCALE = 5e6;
 
 const int WINDOW_WIDTH = 1900;
 const int WINDOW_HEIGHT = 1000;
-const std::shared_ptr<float> GRAVITATIONAL_CONSTANT = std::make_shared<float>(6.67430e-11f);
+const float GRAVITATIONAL_CONSTANT = 6.67430e-11f;
 
-bool pause_at_start = false;
+const bool MOVABLE_OBJECTS = true;
 
 // Scales the position of an object so it can be seen on the window
 sf::Vector2f scale_position(SpaceObject *object);
@@ -53,14 +51,14 @@ int main()
     std::vector<SpaceObject *> objects;
 
     objects.push_back(new SpaceObject("Sun", 1.989e30, 696340, {0, 0}, {0, 0}, false));
-    objects.push_back(new SpaceObject("Mercury", 3.285e23, 2439.7, {0, -5.791e10}, {47870, 0}));
-    objects.push_back(new SpaceObject("Venus", 4.867e24, 6051.8, {0, -1.082e11}, {35020, 0}));
-    objects.push_back(new SpaceObject("Earth", 5.972e24, 6371, {0, -1.496e11}, {29780, 0}));
-    objects.push_back(new SpaceObject("Mars", 6.39e23, 3389.5, {0, -2.279e11}, {24070, 0}));
-    objects.push_back(new SpaceObject("Jupiter", 1.898e27, 69911, {0, -7.785e11}, {13070, 0}));
-    objects.push_back(new SpaceObject("Saturn", 5.683e26, 58232, {0, -1.433e12}, {9680, 0}));
-    objects.push_back(new SpaceObject("Uranus", 8.681e25, 25362, {0, -2.877e12}, {6800, 0}));
-    objects.push_back(new SpaceObject("Neptune", 1.024e26, 24622, {0, -4.503e12}, {5430, 0}));
+    objects.push_back(new SpaceObject("Mercury", 3.285e23, 2439.7, {0, -5.791e10}, {47870, 0}, MOVABLE_OBJECTS));
+    objects.push_back(new SpaceObject("Venus", 4.867e24, 6051.8, {0, -1.082e11}, {35020, 0}, MOVABLE_OBJECTS));
+    objects.push_back(new SpaceObject("Earth", 5.972e24, 6371, {0, -1.496e11}, {29780, 0}, MOVABLE_OBJECTS));
+    objects.push_back(new SpaceObject("Mars", 6.39e23, 3389.5, {0, -2.279e11}, {24070, 0}, MOVABLE_OBJECTS));
+    objects.push_back(new SpaceObject("Jupiter", 1.898e27, 69911, {0, -7.785e11}, {13070, 0}, MOVABLE_OBJECTS));
+    objects.push_back(new SpaceObject("Saturn", 5.683e26, 58232, {0, -1.433e12}, {9680, 0}, MOVABLE_OBJECTS));
+    objects.push_back(new SpaceObject("Uranus", 8.681e25, 25362, {0, -2.877e12}, {6800, 0}, MOVABLE_OBJECTS));
+    objects.push_back(new SpaceObject("Neptune", 1.024e26, 24622, {0, -4.503e12}, {5430, 0}, MOVABLE_OBJECTS));
 
     std::vector<sf::CircleShape> shapes;
     for (const auto &object : objects)
@@ -79,9 +77,6 @@ int main()
         shapes.push_back(shape);
     }
 
-    DynamicMovementStrategy dynamicStrategy(GRAVITATIONAL_CONSTANT);
-    DynamicMovementStrategy *strategy = &dynamicStrategy;
-
     sf::Clock clock;
 
     while (window.isOpen())
@@ -95,39 +90,27 @@ int main()
 
         float delta_time = clock.restart().asSeconds() * TIME_SCALE;
 
-        if (!pause_at_start)
+        for (size_t i = 0; i < objects.size(); ++i)
         {
-            for (size_t i = 0; i < objects.size(); ++i)
+            std::vector<const SpaceObject *> others;
+
+            for (size_t j = 0; j < objects.size(); ++j)
             {
-                if (!objects[i]->is_movable())
+                if (i != j)
                 {
-                    continue;
+                    others.push_back(objects[j]);
                 }
-
-                std::vector<const SpaceObject *> others;
-
-                for (size_t j = 0; j < objects.size(); ++j)
-                {
-                    if (i != j)
-                    {
-                        others.push_back(objects[j]);
-                    }
-                }
-
-                strategy->update_velocity(objects[i], others, delta_time);
             }
 
-            for (size_t i = 0; i < objects.size(); ++i)
-            {
-                sf::Vector2f position = objects[i]->get_position();
-                sf::Vector2f velocity = objects[i]->get_velocity();
-                position += velocity * delta_time;
+            objects[i]->update_velocity(others, GRAVITATIONAL_CONSTANT, delta_time);
+        }
 
-                objects[i]->set_position(position);
+        for (size_t i = 0; i < objects.size(); ++i)
+        {
+            objects[i]->update_position(delta_time);
 
-                sf::Vector2f scaled_position = scale_position(objects[i]);
-                assign_position(&shapes[i], scaled_position);
-            }
+            sf::Vector2f scaled_position = scale_position(objects[i]);
+            assign_position(&shapes[i], scaled_position);
         }
 
         window.clear(sf::Color::Black);
@@ -136,15 +119,8 @@ int main()
         {
             window.draw(shape);
         }
-
+        
         window.display();
-
-        if (pause_at_start)
-        {
-            std::cout << "Pause at start. Press Enter to quit...\n";
-            std::cin.get();
-            break;
-        }
     }
 
     for (auto object : objects)

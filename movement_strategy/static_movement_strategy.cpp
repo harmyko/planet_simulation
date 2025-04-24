@@ -1,6 +1,12 @@
 #include "static_movement_strategy.hpp"
 
-void StaticMovementStrategy::update_velocity(SpaceObject *target, const std::vector<const SpaceObject *> &others, const float delta_time) const
+void StaticMovementStrategy::update_velocity(const std::vector<const SpaceObject *> &others,
+    const float gravitational_constant, const float delta_time)
 {
-    target->set_velocity(new_velocity);
+    *velocity = {0.f, 0.f}; 
+}
+
+void StaticMovementStrategy::update_position(const float delta_time)
+{
+    return;
 }

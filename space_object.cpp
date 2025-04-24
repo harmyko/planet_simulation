@@ -4,6 +4,8 @@
 
 #include "space_object.hpp"
 #include "space_object_exception.hpp"
+#include "movement_strategy/dynamic_movement_strategy.hpp"
+#include "movement_strategy/static_movement_strategy.hpp"
 
 class SpaceObject::SpaceObjectImpl
 {
@@ -18,6 +20,8 @@ public:
     sf::Vector2f position;
     sf::Vector2f velocity;
     bool movable;
+
+    IMovementStrategy *movement_strategy = nullptr;
 
     SpaceObjectImpl(std::string name, double mass, double radius, sf::Vector2f position, sf::Vector2f velocity, bool movable)
     {
@@ -87,6 +91,25 @@ public:
     void set_movability(bool movable)
     {
         this->movable = movable;
+
+        if (movement_strategy != nullptr)
+        {
+            delete movement_strategy;
+        }
+
+        set_movement_strategy(movable);
+    }
+
+    void set_movement_strategy(bool movable)
+    {
+        if (movable == true)
+        {
+            this->movement_strategy = new DynamicMovementStrategy(&mass, &radius, &position, &velocity);
+        }
+        else
+        {
+            this->movement_strategy = new StaticMovementStrategy(&mass, &radius, &position, &velocity);
+        }
     }
 };
 
@@ -135,9 +158,15 @@ void SpaceObject::print_info(std::ostream &output) const
            << "Is movable: " << impl->movable << "\n\n";
 }
 
-void SpaceObject::update_velocity(sf::Vector2f velocity)
+void SpaceObject::update_velocity(std::vector<const SpaceObject *> &others,
+    const float gravitational_constant, const float delta_time)
 {
-    impl->set_velocity(velocity);
+    impl->movement_strategy->update_velocity(others, gravitational_constant, delta_time);
+}
+
+void SpaceObject::update_position(const float delta_time)
+{
+    impl->movement_strategy->update_position(delta_time);
 }
 
 // Getters

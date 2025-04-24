@@ -2,6 +2,7 @@
 #define SPACE_OBJECT_HPP
 
 #include <string>
+#include <vector>
 #include <SFML/System.hpp>
 
 class SpaceObject
@@ -25,7 +26,8 @@ public:
 
     // Methods
     void print_info(std::ostream &output) const;
-    void update_velocity(sf::Vector2f velocity);
+    void update_velocity(std::vector<const SpaceObject *> &others, const float gravitational_constant, const float delta_time);
+    void update_position(const float delta_time);
 
     // Getters
     static int get_object_count();

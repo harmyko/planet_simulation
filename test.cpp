@@ -8,7 +8,8 @@
 #include "movement_strategy/static_movement_strategy.hpp"
 
 const std::string RESULTS_FILENAME = "test_results.txt";
-const std::shared_ptr<float> GRAVITATIONAL_CONSTANT = std::make_shared<float>(6.67430e-11f);
+const float GRAVITATIONAL_CONSTANT = 6.67430e-11f;
+const float DELTA_TIME = 86400.0f;
 
 int main()
 {
@@ -94,13 +95,6 @@ int main()
     copy_of_venus.print_info(std::cout);
     copy_of_venus.print_info(output_file);
 
-    // Creating both movement strategies and performing tests with them
-    StaticMovementStrategy* static_movement_strategy = new StaticMovementStrategy(GRAVITATIONAL_CONSTANT, {6969, 6969});
-    DynamicMovementStrategy* dynamic_movement_strategy = new DynamicMovementStrategy(GRAVITATIONAL_CONSTANT);
-    IMovementStrategy* movement_strategy;
-
-    movement_strategy = dynamic_movement_strategy;
-
     std::vector<const SpaceObject *> other_objects;
     other_objects.push_back((&space_object_array[1]));
     other_objects.push_back((&dynamic_space_object_array[0]));
@@ -108,15 +102,15 @@ int main()
 
     std::cout << "Applying DynamicMovementStrategy to the original version of " << space_object_array[0].get_name() << ":\n";
     output_file << "Applying DynamicMovementStrategy to the original version of " << space_object_array[0].get_name() << ":\n";
-    movement_strategy->update_velocity(&space_object_array[0], other_objects, 1e10f);
+    space_object_array[0].update_velocity(other_objects, GRAVITATIONAL_CONSTANT, DELTA_TIME);
 
     space_object_array[0].print_info(std::cout);
     space_object_array[0].print_info(output_file);
 
     std::cout << "\nApplying StaticMovementStrategy to the copied version of " << space_object_array[0].get_name() << ":\n";
     output_file << "\nApplying StaticMovementStrategy to the copied version of " << space_object_array[0].get_name() << ":\n";
-    movement_strategy = static_movement_strategy;
-    movement_strategy->update_velocity(&copy_of_venus, other_objects, 1e10f);
+    copy_of_venus.set_movability(false);
+    copy_of_venus.update_velocity(other_objects, GRAVITATIONAL_CONSTANT, DELTA_TIME);
 
     copy_of_venus.print_info(std::cout);
     copy_of_venus.print_info(output_file);

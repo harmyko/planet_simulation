@@ -12,9 +12,13 @@ const int TILE_SIZE = 100;
 const int MIN_OBJECTS = 30;
 const int MAX_OBJECTS_DIVISOR = 5; // Total available positions get divided by this number to mitigate the max possible amount of objects
 
+// Playing around and experimenting with these values can be quite fun!
+const int TILE_SIZE = 100;
+const int MIN_OBJECTS = 30;
+const int MAX_OBJECTS_DIVISOR = 5; // Total available positions get divided by this number to mitigate the max possible amount of objects
 const int TIME_SCALE = 10;
-const int MAX_VELOCITY = 5;
-const std::shared_ptr<float> GRAVITATIONAL_CONSTANT = std::make_shared<float>(1.f);
+const int MAX_VELOCITY = 2;
+const float GRAVITATIONAL_CONSTANT = 1;
 
 std::vector<SpaceObject *> create_random_objects();
 int get_random_number(int min, int max);
@@ -47,9 +51,6 @@ int main()
     text.setFillColor(sf::Color::White);
     text.setPosition(10, 10);
 
-    DynamicMovementStrategy dynamicStrategy(GRAVITATIONAL_CONSTANT);
-    DynamicMovementStrategy *strategy = &dynamicStrategy;
-
     sf::Clock clock;
 
     while (window.isOpen())
@@ -75,15 +76,14 @@ int main()
                 }
             }
 
-            strategy->update_velocity(objects[i], others, delta_time);
+            objects[i]->update_velocity(others, GRAVITATIONAL_CONSTANT, delta_time);
         }
 
         size_t i = 0;
         while (i < objects.size())
         {
+            objects[i]->update_position(delta_time);
             sf::Vector2f position = objects[i]->get_position();
-            sf::Vector2f velocity = objects[i]->get_velocity();
-            position += velocity * delta_time;
         
             if (position.x > WINDOW_WIDTH + objects[i]->get_radius() ||
                 position.y > WINDOW_HEIGHT + objects[i]->get_radius() ||
