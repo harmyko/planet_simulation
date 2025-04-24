@@ -14,7 +14,7 @@ const int MAX_OBJECTS_DIVISOR = 5; // Total available positions get divided by t
 
 const int TIME_SCALE = 10;
 const int MAX_VELOCITY = 5;
-const float GRAVITATIONAL_CONSTANT = 1.f;
+const std::shared_ptr<float> GRAVITATIONAL_CONSTANT = std::make_shared<float>(1.f);
 
 std::vector<SpaceObject *> create_random_objects();
 int get_random_number(int min, int max);

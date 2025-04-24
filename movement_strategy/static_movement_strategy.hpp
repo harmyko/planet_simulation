@@ -9,7 +9,7 @@ private:
     sf::Vector2f new_velocity;
 
 public:
-    StaticMovementStrategy(float gravity, sf::Vector2f velocity = {0, 0})
+    StaticMovementStrategy(std::shared_ptr<float> gravity, sf::Vector2f velocity = {0, 0})
         : IMovementStrategy(gravity), new_velocity(velocity) {}
 
     void update_velocity(SpaceObject *target, const std::vector<const SpaceObject* > &others, const float delta_time) const override;

@@ -29,7 +29,7 @@ const float TIME_SCALE = 5e6;
 
 const int WINDOW_WIDTH = 1900;
 const int WINDOW_HEIGHT = 1000;
-const float GRAVITATIONAL_CONSTANT = 6.67430e-11f;
+const std::shared_ptr<float> GRAVITATIONAL_CONSTANT = std::make_shared<float>(6.67430e-11f);
 
 bool pause_at_start = false;
 

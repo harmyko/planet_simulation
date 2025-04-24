@@ -24,7 +24,7 @@ void DynamicMovementStrategy::update_velocity(SpaceObject *target, const std::ve
         }
         
         // Calculate the magnitude of the gravitational force: force = G * target_mass * other_mass / distance_squared
-        float force_magnitude = (G * target->get_mass() * other->get_mass()) / distance_squared;
+        float force_magnitude = (*G * target->get_mass() * other->get_mass()) / distance_squared;
 
         // Convert the magnitude to a vector (pointing the vector to the "other" SpaceObject)
         float distance = std::sqrt(distance_squared);

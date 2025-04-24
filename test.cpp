@@ -8,7 +8,7 @@
 #include "movement_strategy/static_movement_strategy.hpp"
 
 const std::string RESULTS_FILENAME = "test_results.txt";
-const float GRAVITATIONAL_CONSTANT = 6.67430e-11f;
+const std::shared_ptr<float> GRAVITATIONAL_CONSTANT = std::make_shared<float>(6.67430e-11f);
 
 int main()
 {

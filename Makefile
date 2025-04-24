@@ -11,7 +11,7 @@ SOURCE_TEST = test.cpp
 SPACE_OBJECT_SRC = space_object.cpp
 DYNAMIC_STRATEGY_SRC = movement_strategy/dynamic_movement_strategy.cpp
 STATIC_STRATEGY_SRC = movement_strategy/static_movement_strategy.cpp
-HEADERS = space_object.h movement_strategy/dynamic_movement_strategy.h movement_strategy/static_movement_strategy.h
+HEADERS = space_object.hpp movement_strategy/dynamic_movement_strategy.hpp movement_strategy/static_movement_strategy.hpp
 
 # Build the random_objects executable
 random_objects.exe: $(SOURCE_RANDOM_OBJECTS) $(OBJECTS) $(HEADERS)
@@ -26,15 +26,15 @@ test.exe: $(SOURCE_TEST) $(OBJECTS) $(HEADERS)
 	$(CXX) $(CXXFLAGS) -o test.exe $(SOURCE_TEST) $(OBJECTS) $(INCLUDE_PATH) $(LIBRARY_PATH) $(SFML_LIBS)
 
 # Build space_object.o
-space_object.o: $(SPACE_OBJECT_SRC) space_object.h
+space_object.o: $(SPACE_OBJECT_SRC) space_object.hpp
 	$(CXX) -c $(CXXFLAGS) $(SPACE_OBJECT_SRC) -o space_object.o $(INCLUDE_PATH)
 
 # Build dynamic_movement_strategy.o
-movement_strategy/dynamic_movement_strategy.o: $(DYNAMIC_STRATEGY_SRC) movement_strategy/dynamic_movement_strategy.h
+movement_strategy/dynamic_movement_strategy.o: $(DYNAMIC_STRATEGY_SRC) movement_strategy/dynamic_movement_strategy.hpp
 	$(CXX) -c $(CXXFLAGS) $(DYNAMIC_STRATEGY_SRC) -o movement_strategy/dynamic_movement_strategy.o $(INCLUDE_PATH)
 
 # Build static_movement_strategy.o
-movement_strategy/static_movement_strategy.o: $(STATIC_STRATEGY_SRC) movement_strategy/static_movement_strategy.h
+movement_strategy/static_movement_strategy.o: $(STATIC_STRATEGY_SRC) movement_strategy/static_movement_strategy.hpp
 	$(CXX) -c $(CXXFLAGS) $(STATIC_STRATEGY_SRC) -o movement_strategy/static_movement_strategy.o $(INCLUDE_PATH)
 
 # Clean up object files and executables

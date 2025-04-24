@@ -2,6 +2,7 @@
 #define I_MOVEMENT_STRATEGY_HPP
 
 #include <vector>
+#include <memory>
 
 #include "../space_object.hpp"
 
@@ -11,11 +12,11 @@ class IMovementStrategy
 {
 protected:
 
-    float G;
+    std::shared_ptr<float> G = std::make_shared<float>(6.67430e-11f);
 
 public:
 
-    IMovementStrategy(float gravity) : G(gravity) {}
+    IMovementStrategy(std::shared_ptr<float> gravity) : G(gravity) {}
     virtual ~IMovementStrategy() = default;
 
     virtual void update_velocity(SpaceObject *target, const std::vector<const SpaceObject *> &others, const float delta_time) const = 0;
