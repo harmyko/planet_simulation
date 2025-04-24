@@ -7,6 +7,7 @@ SFML_LIBS = -lsfml-graphics -lsfml-window -lsfml-system
 OBJECTS = space_object.o movement_strategy/dynamic_movement_strategy.o movement_strategy/static_movement_strategy.o
 SOURCE_SOLAR_SYSTEM = solar_system.cpp
 SOURCE_RANDOM_OBJECTS = random_objects.cpp
+SOURCE_TEST = test.cpp
 SPACE_OBJECT_SRC = space_object.cpp
 DYNAMIC_STRATEGY_SRC = movement_strategy/dynamic_movement_strategy.cpp
 STATIC_STRATEGY_SRC = movement_strategy/static_movement_strategy.cpp
@@ -19,6 +20,10 @@ random_objects.exe: $(SOURCE_RANDOM_OBJECTS) $(OBJECTS) $(HEADERS)
 # Build the solar_system executable
 solar_system.exe: $(SOURCE_SOLAR_SYSTEM) $(OBJECTS) $(HEADERS)
 	$(CXX) $(CXXFLAGS) -o solar_system.exe $(SOURCE_SOLAR_SYSTEM) $(OBJECTS) $(INCLUDE_PATH) $(LIBRARY_PATH) $(SFML_LIBS)
+
+# Build the test executable
+test.exe: $(SOURCE_TEST) $(OBJECTS) $(HEADERS)
+	$(CXX) $(CXXFLAGS) -o test.exe $(SOURCE_TEST) $(OBJECTS) $(INCLUDE_PATH) $(LIBRARY_PATH) $(SFML_LIBS)
 
 # Build space_object.o
 space_object.o: $(SPACE_OBJECT_SRC) space_object.h

@@ -2,8 +2,8 @@
 #include <fstream>
 #include <SFML/System.hpp>
 
-#include "space_object.h"
-#include "space_object_exception.h"
+#include "space_object.hpp"
+#include "space_object_exception.hpp"
 
 class SpaceObject::SpaceObjectImpl
 {
@@ -58,7 +58,7 @@ public:
     {
         if (mass < 0)
         {
-            throw SpaceObjectException("SpaceObject mass must be positive!");
+            throw SpaceObjectException("SpaceObject mass cannot be negative!");
         }
 
         this->mass = mass;
@@ -66,9 +66,9 @@ public:
 
     void set_radius(double radius)
     {
-        if (radius <= 0)
+        if (radius < 0)
         {
-            throw SpaceObjectException("SpaceObject radius must be positive!");
+            throw SpaceObjectException("SpaceObject radius cannot be negative!");
         }
 
         this->radius = radius;
@@ -131,7 +131,8 @@ void SpaceObject::print_info(std::ostream &output) const
            << "Mass: " << impl->mass << " kg\n"
            << "Radius: " << impl->radius << " km\n"
            << "Position: (" << impl->position.x << ", " << impl->position.y << ") m\n"
-           << "Velocity: (" << impl->velocity.x << ", " << impl->velocity.y << ") m/s\n\n";
+           << "Velocity: (" << impl->velocity.x << ", " << impl->velocity.y << ") m/s\n"
+           << "Is movable: " << impl->movable << "\n\n";
 }
 
 void SpaceObject::update_velocity(sf::Vector2f velocity)

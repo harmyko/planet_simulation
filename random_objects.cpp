@@ -3,8 +3,8 @@
 #include <random>
 #include <SFML/Graphics.hpp>
 
-#include "space_object.h"
-#include "movement_strategy/dynamic_movement_strategy.h"
+#include "space_object.hpp"
+#include "movement_strategy/dynamic_movement_strategy.hpp"
 
 const int WINDOW_WIDTH = 1900;
 const int WINDOW_HEIGHT = 900;
@@ -75,7 +75,7 @@ int main()
                 }
             }
 
-            strategy->apply_velocity(objects[i], others, delta_time);
+            strategy->update_velocity(objects[i], others, delta_time);
         }
 
         size_t i = 0;

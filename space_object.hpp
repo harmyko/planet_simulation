@@ -1,5 +1,5 @@
-#ifndef SPACE_OBJECT_H
-#define SPACE_OBJECT_H
+#ifndef SPACE_OBJECT_HPP
+#define SPACE_OBJECT_HPP
 
 #include <string>
 #include <SFML/System.hpp>
@@ -46,4 +46,4 @@ public:
     void set_movability(bool movable);
 };
 
-#endif // SPACE_OBJECT_H
+#endif // SPACE_OBJECT_HPP

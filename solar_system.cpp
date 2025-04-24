@@ -2,8 +2,8 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 
-#include "space_object.h"
-#include "movement_strategy/dynamic_movement_strategy.h"
+#include "space_object.hpp"
+#include "movement_strategy/dynamic_movement_strategy.hpp"
 
 const float SUN_RADIUS_SCALE =      12000.f;
 const float MERCURY_RADIUS_SCALE =  300.f;
@@ -114,7 +114,7 @@ int main()
                     }
                 }
 
-                strategy->apply_velocity(objects[i], others, delta_time);
+                strategy->update_velocity(objects[i], others, delta_time);
             }
 
             for (size_t i = 0; i < objects.size(); ++i)

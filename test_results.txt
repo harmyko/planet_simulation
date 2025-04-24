@@ -1,0 +1,97 @@
+---------------------------------------------
+Running tests for the following modules:
+- space_object.hpp
+- space_object_exception.hpp
+- dynamic_movement_strategy.hpp
+- static_movement_strategy.hpp
+---------------------------------------------
+
+Static array of SpaceObjects demonstration:
+
+SpaceObject ID: 1
+Name: Venus
+Mass: 4.867e+24 kg
+Radius: 6051.8 km
+Position: (2134, -1.082e+11) m
+Velocity: (35020, 0) m/s
+Is movable: 1
+
+SpaceObject ID: 2
+Name: Neptune
+Mass: 1.024e+26 kg
+Radius: 24622 km
+Position: (436734, -4.503e+12) m
+Velocity: (5430, 0) m/s
+Is movable: 1
+
+Total active SpaceObjects: 2
+
+Dynamic array of SpaceObjects demonstration:
+
+SpaceObject ID: 3
+Name: Saturn
+Mass: 5.683e+26 kg
+Radius: 58232 km
+Position: (234856, -1.433e+12) m
+Velocity: (9680, 0) m/s
+Is movable: 1
+
+SpaceObject ID: 4
+Name: Uranus
+Mass: 8.681e+25 kg
+Radius: 25362 km
+Position: (4, -2.877e+12) m
+Velocity: (6800, 0) m/s
+Is movable: 1
+
+Testing all the getter methods:
+SpaceObject ID: 1
+SpaceObject Name: Venus
+SpaceObject Mass: 4.867e+24
+SpaceObject Radius: 6051.8
+SpaceObject Position: (2134, -1.082e+11)
+SpaceObject Velocity: (35020, 0)
+
+Copied SpaceObject:
+SpaceObject ID: 5
+Name: Venus
+Mass: 4.867e+24 kg
+Radius: 6051.8 km
+Position: (2134, -1.082e+11) m
+Velocity: (35020, 0) m/s
+Is movable: 1
+
+Applying DynamicMovementStrategy to the original version of Venus:
+SpaceObject ID: 1
+Name: Venus
+Mass: 4.867e+24 kg
+Radius: 6051.8 km
+Position: (2134, -1.082e+11) m
+Velocity: (35020, -227.21) m/s
+Is movable: 1
+
+
+Applying StaticMovementStrategy to the copied version of Venus:
+SpaceObject ID: 5
+Name: Venus
+Mass: 4.867e+24 kg
+Radius: 6051.8 km
+Position: (2134, -1.082e+11) m
+Velocity: (6969, 6969) m/s
+Is movable: 1
+
+Total active SpaceObjects: 5
+Dynamic SpaceObjects have been deleted.
+Total active SpaceObjects after deletion: 3
+
+Successful try block:
+SpaceObject ID: 4
+Name: Good SpaceObject
+Mass: 1 kg
+Radius: 12 km
+Position: (123, 123) m
+Velocity: (0, 0) m/s
+Is movable: 1
+
+Unsuccessful try block:
+SpaceObject creation failed: SpaceObject mass cannot be negative!
