@@ -3,27 +3,27 @@
 
 #include "space_object.hpp"
 
-const float SUN_RADIUS_SCALE =      12000.f;
-const float MERCURY_RADIUS_SCALE =  300.f;
-const float VENUS_RADIUS_SCALE =    450.f;
-const float EARTH_RADIUS_SCALE =    400.f;
-const float MARS_RADIUS_SCALE =     350.f;
-const float JUPITER_RADIUS_SCALE =  1900.f;
-const float SATURN_RADIUS_SCALE =   1800.f;
-const float URANUS_RADIUS_SCALE =   1800.f;
-const float NEPTUNE_RADIUS_SCALE =  1400.f;
+const float SUN_RADIUS_SCALE = 12000.f;
+const float MERCURY_RADIUS_SCALE = 300.f;
+const float VENUS_RADIUS_SCALE = 450.f;
+const float EARTH_RADIUS_SCALE = 400.f;
+const float MARS_RADIUS_SCALE = 350.f;
+const float JUPITER_RADIUS_SCALE = 1900.f;
+const float SATURN_RADIUS_SCALE = 1800.f;
+const float URANUS_RADIUS_SCALE = 1800.f;
+const float NEPTUNE_RADIUS_SCALE = 1400.f;
 
-const float SUN_POSITION_SCALE =        1000000000.f;
-const float MERCURY_POSITION_SCALE =    700000000.f;
-const float VENUS_POSITION_SCALE =      900000000.f;
-const float EARTH_POSITION_SCALE =      950000000.f;
-const float MARS_POSITION_SCALE =       1130000000.f;
-const float JUPITER_POSITION_SCALE =    3000000000.f;
-const float SATURN_POSITION_SCALE =     4300000000.f;
-const float URANUS_POSITION_SCALE =     7500000000.f;
-const float NEPTUNE_POSITION_SCALE =    10500000000.f;
+const float SUN_POSITION_SCALE = 1000000000.f;
+const float MERCURY_POSITION_SCALE = 700000000.f;
+const float VENUS_POSITION_SCALE = 900000000.f;
+const float EARTH_POSITION_SCALE = 950000000.f;
+const float MARS_POSITION_SCALE = 1130000000.f;
+const float JUPITER_POSITION_SCALE = 3000000000.f;
+const float SATURN_POSITION_SCALE = 4300000000.f;
+const float URANUS_POSITION_SCALE = 7500000000.f;
+const float NEPTUNE_POSITION_SCALE = 10500000000.f;
 
-const float TIME_SCALE = 5e6;
+const float DELTA_TIME = 86400; // 86400 is equal to one Earth day
 
 const int WINDOW_WIDTH = 1900;
 const int WINDOW_HEIGHT = 1000;
@@ -77,8 +77,6 @@ int main()
         shapes.push_back(shape);
     }
 
-    sf::Clock clock;
-
     while (window.isOpen())
     {
         sf::Event event;
@@ -87,8 +85,6 @@ int main()
             if (event.type == sf::Event::Closed)
                 window.close();
         }
-
-        float delta_time = clock.restart().asSeconds() * TIME_SCALE;
 
         for (size_t i = 0; i < objects.size(); ++i)
         {
@@ -102,12 +98,12 @@ int main()
                 }
             }
 
-            objects[i]->update_velocity(others, GRAVITATIONAL_CONSTANT, delta_time);
+            objects[i]->update_velocity(others, GRAVITATIONAL_CONSTANT, DELTA_TIME);
         }
 
         for (size_t i = 0; i < objects.size(); ++i)
         {
-            objects[i]->update_position(delta_time);
+            objects[i]->update_position(DELTA_TIME);
 
             sf::Vector2f scaled_position = scale_position(objects[i]);
             assign_position(&shapes[i], scaled_position);
@@ -119,7 +115,7 @@ int main()
         {
             window.draw(shape);
         }
-        
+
         window.display();
     }
 
@@ -185,9 +181,9 @@ sf::Vector2f scale_position(SpaceObject *object)
     else
     {
         scaled_position.x = position.x / EARTH_POSITION_SCALE;
-        scaled_position.y = position.y / EARTH_POSITION_SCALE;   
+        scaled_position.y = position.y / EARTH_POSITION_SCALE;
     }
-    
+
     return scaled_position;
 }
 

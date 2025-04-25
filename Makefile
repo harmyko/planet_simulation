@@ -1,42 +1,55 @@
+# Compiler and flags
 CXX = g++
 CXXFLAGS = -std=c++17
-INCLUDE_PATH = -IC:/msys64/mingw64/include -I. -Imovement
+
+# SFML include and lib paths
+INCLUDE_PATH = -IC:/msys64/mingw64/include -Iinclude -Iinclude/space_sim
 LIBRARY_PATH = -LC:/msys64/mingw64/lib
 SFML_LIBS = -lsfml-graphics -lsfml-window -lsfml-system
 
-OBJECTS = space_object.o movement/dynamic.o movement/static.o
-SOURCE_SOLAR_SYSTEM = solar_system.cpp
-SOURCE_RANDOM_OBJECTS = random_objects.cpp
-SOURCE_TEST = test.cpp
-SPACE_OBJECT_SRC = space_object.cpp
-DYNAMIC_STRATEGY_SRC = movement/dynamic.cpp
-STATIC_STRATEGY_SRC = movement/static.cpp
-HEADERS = space_object.hpp movement/dynamic.hpp movement/static.hpp
+# Directories
+SRC_DIR = src
+CORE_DIR = $(SRC_DIR)/core
+MAIN_DIR = $(SRC_DIR)/main
+BUILD_DIR = build
+BIN_DIR = bin
+INCLUDE_DIR = include/space_sim
 
-# Build the random_objects executable
-random_objects.exe: $(SOURCE_RANDOM_OBJECTS) $(OBJECTS) $(HEADERS)
-	$(CXX) $(CXXFLAGS) -o random_objects.exe $(SOURCE_RANDOM_OBJECTS) $(OBJECTS) $(INCLUDE_PATH) $(LIBRARY_PATH) $(SFML_LIBS)
+# Object files
+OBJS = \
+	$(BUILD_DIR)/space_object.o \
+	$(BUILD_DIR)/movement_dynamic.o \
+	$(BUILD_DIR)/movement_static.o
 
-# Build the solar_system executable
-solar_system.exe: $(SOURCE_SOLAR_SYSTEM) $(OBJECTS) $(HEADERS)
-	$(CXX) $(CXXFLAGS) -o solar_system.exe $(SOURCE_SOLAR_SYSTEM) $(OBJECTS) $(INCLUDE_PATH) $(LIBRARY_PATH) $(SFML_LIBS)
+# Executable targets
+TARGETS = \
+	$(BIN_DIR)/random_objects.exe \
+	$(BIN_DIR)/solar_system.exe \
+	$(BIN_DIR)/test.exe
 
-# Build the test executable
-test.exe: $(SOURCE_TEST) $(OBJECTS) $(HEADERS)
-	$(CXX) $(CXXFLAGS) -o test.exe $(SOURCE_TEST) $(OBJECTS) $(INCLUDE_PATH) $(LIBRARY_PATH) $(SFML_LIBS)
+# Default target
+all: $(TARGETS)
 
-# Build space_object.o
-space_object.o: $(SPACE_OBJECT_SRC) space_object.hpp
-	$(CXX) -c $(CXXFLAGS) $(SPACE_OBJECT_SRC) -o space_object.o $(INCLUDE_PATH)
+# Individual executable builds
+$(BIN_DIR)/random_objects.exe: $(MAIN_DIR)/random_objects.cpp $(OBJS)
+	$(CXX) $(CXXFLAGS) -o $@ $^ $(INCLUDE_PATH) $(LIBRARY_PATH) $(SFML_LIBS)
 
-# Build dynamic.o
-movement/dynamic.o: $(DYNAMIC_STRATEGY_SRC) movement/dynamic.hpp
-	$(CXX) -c $(CXXFLAGS) $(DYNAMIC_STRATEGY_SRC) -o movement/dynamic.o $(INCLUDE_PATH)
+$(BIN_DIR)/solar_system.exe: $(MAIN_DIR)/solar_system.cpp $(OBJS)
+	$(CXX) $(CXXFLAGS) -o $@ $^ $(INCLUDE_PATH) $(LIBRARY_PATH) $(SFML_LIBS)
 
-# Build static.o
-movement/static.o: $(STATIC_STRATEGY_SRC) movement/static.hpp
-	$(CXX) -c $(CXXFLAGS) $(STATIC_STRATEGY_SRC) -o movement/static.o $(INCLUDE_PATH)
+$(BIN_DIR)/test.exe: $(MAIN_DIR)/test.cpp $(OBJS)
+	$(CXX) $(CXXFLAGS) -o $@ $^ $(INCLUDE_PATH) $(LIBRARY_PATH) $(SFML_LIBS)
 
-# Clean up object files and executables
+# Core object file builds
+$(BUILD_DIR)/space_object.o: $(CORE_DIR)/space_object.cpp $(INCLUDE_DIR)/space_object.hpp
+	$(CXX) -c $(CXXFLAGS) $< -o $@ $(INCLUDE_PATH)
+
+$(BUILD_DIR)/movement_dynamic.o: $(CORE_DIR)/movement_dynamic.cpp $(INCLUDE_DIR)/movement/dynamic.hpp
+	$(CXX) -c $(CXXFLAGS) $< -o $@ $(INCLUDE_PATH)
+
+$(BUILD_DIR)/movement_static.o: $(CORE_DIR)/movement_static.cpp $(INCLUDE_DIR)/movement/static.hpp
+	$(CXX) -c $(CXXFLAGS) $< -o $@ $(INCLUDE_PATH)
+
+# Clean build files
 clean:
-	del /Q *.o *.exe movement\*.o 2> nul || rm -f *.o *.exe movement/*.o
+	del /Q $(BUILD_DIR)\*.o $(BIN_DIR)\*.exe 2> nul || true

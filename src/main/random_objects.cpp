@@ -4,21 +4,22 @@
 #include <SFML/Graphics.hpp>
 
 #include "space_object.hpp"
-#include "movement/dynamic.hpp"
 
 const int WINDOW_WIDTH = 1900;
 const int WINDOW_HEIGHT = 900;
-const int TILE_SIZE = 100;
-const int MIN_OBJECTS = 30;
-const int MAX_OBJECTS_DIVISOR = 5; // Total available positions get divided by this number to mitigate the max possible amount of objects
+const std::string FONT_DIRECTORY = "../resources/MontserratBlack.ttf";
 
 // Playing around and experimenting with these values can be quite fun!
 const int TILE_SIZE = 100;
 const int MIN_OBJECTS = 30;
 const int MAX_OBJECTS_DIVISOR = 5; // Total available positions get divided by this number to mitigate the max possible amount of objects
-const int TIME_SCALE = 10;
-const int MAX_VELOCITY = 2;
-const float GRAVITATIONAL_CONSTANT = 1;
+const int DELTA_TIME = 1;
+const int VELOCITY_MAX = 2;
+const float GRAVITATIONAL_CONSTANT = 5;
+const int MASS_MIN = 5;
+const int MASS_MAX = 10;
+const int RADIUS_MIN = 5;
+const int RADIUS_MAX = TILE_SIZE / 2;
 
 std::vector<SpaceObject *> create_random_objects();
 int get_random_number(int min, int max);
@@ -40,7 +41,7 @@ int main()
     }
 
     sf::Font font;
-    if (!font.loadFromFile("resources/MontserratBlack.ttf"))
+    if (!font.loadFromFile(FONT_DIRECTORY))
     {
         return -1;
     }
@@ -51,8 +52,6 @@ int main()
     text.setFillColor(sf::Color::White);
     text.setPosition(10, 10);
 
-    sf::Clock clock;
-
     while (window.isOpen())
     {
         sf::Event event;
@@ -61,8 +60,6 @@ int main()
             if (event.type == sf::Event::Closed)
                 window.close();
         }
-
-        float delta_time = clock.restart().asSeconds() * TIME_SCALE;
 
         for (size_t i = 0; i < objects.size(); ++i)
         {
@@ -76,15 +73,15 @@ int main()
                 }
             }
 
-            objects[i]->update_velocity(others, GRAVITATIONAL_CONSTANT, delta_time);
+            objects[i]->update_velocity(others, GRAVITATIONAL_CONSTANT, DELTA_TIME);
         }
 
         size_t i = 0;
         while (i < objects.size())
         {
-            objects[i]->update_position(delta_time);
+            objects[i]->update_position(DELTA_TIME);
             sf::Vector2f position = objects[i]->get_position();
-        
+
             if (position.x > WINDOW_WIDTH + objects[i]->get_radius() ||
                 position.y > WINDOW_HEIGHT + objects[i]->get_radius() ||
                 position.x < -objects[i]->get_radius() ||
@@ -102,7 +99,6 @@ int main()
                 ++i;
             }
         }
-        
 
         window.clear();
 
@@ -146,25 +142,25 @@ std::vector<SpaceObject *> create_random_objects()
         sf::Vector2f random_position = available_positions[random_available_position_index];
         available_positions.erase(available_positions.begin() + random_available_position_index);
 
-        double random_mass = get_random_number(100, 1000);
-        double random_radius = get_random_number(5, 50);
+        double random_mass = get_random_number(MASS_MIN, MASS_MAX);
+        double random_radius = get_random_number(RADIUS_MIN, RADIUS_MAX);
         sf::Vector2f random_velocity;
 
         if (random_position.x <= WINDOW_WIDTH / 2 && random_position.y <= WINDOW_HEIGHT)
         {
-            random_velocity = {float(get_random_number(0, MAX_VELOCITY)), float(get_random_number(0, MAX_VELOCITY))};
+            random_velocity = {float(get_random_number(0, VELOCITY_MAX)), float(get_random_number(0, VELOCITY_MAX))};
         }
         else if (random_position.x > WINDOW_WIDTH / 2 && random_position.y <= WINDOW_HEIGHT)
         {
-            random_velocity = {float(get_random_number(-MAX_VELOCITY, 0)), float(get_random_number(0, MAX_VELOCITY))};
+            random_velocity = {float(get_random_number(-VELOCITY_MAX, 0)), float(get_random_number(0, VELOCITY_MAX))};
         }
         else if (random_position.x <= WINDOW_WIDTH / 2 && random_position.y > WINDOW_HEIGHT)
         {
-            random_velocity = {float(get_random_number(0, MAX_VELOCITY)), float(get_random_number(-MAX_VELOCITY, 0))};
+            random_velocity = {float(get_random_number(0, VELOCITY_MAX)), float(get_random_number(-VELOCITY_MAX, 0))};
         }
         else
         {
-            random_velocity = {float(get_random_number(-MAX_VELOCITY, 0)), float(get_random_number(-MAX_VELOCITY, 0))};
+            random_velocity = {float(get_random_number(-VELOCITY_MAX, 0)), float(get_random_number(-VELOCITY_MAX, 0))};
         }
 
         random_objects.push_back(new SpaceObject("random_object", random_mass, random_radius, random_position, random_velocity));

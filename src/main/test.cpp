@@ -1,11 +1,11 @@
 #include <iostream>
 #include <string>
 #include <fstream>
- 
+
 #include "space_object.hpp"
 
-const std::string RESULTS_FILENAME = "resources/test_results.txt";
-const std::string BINARY_FILENAME = "resources/space_object.dat";
+const std::string RESULTS_FILENAME = "../resources/test_results.txt";
+const std::string BINARY_FILENAME = "../resources/space_object.dat";
 const float GRAVITATIONAL_CONSTANT = 6.67430e-11f;
 const float DELTA_TIME = 86400.0f;
 
@@ -66,17 +66,17 @@ int main()
         dynamic_space_object_array[i].print_info(output_file);
     }
 
-    std::cout   << "Testing all the getter methods:\n"
-                << "SpaceObject ID: " << space_object_array[0].get_id() << "\n"
-                << "SpaceObject Name: " << space_object_array[0].get_name() << "\n"
-                << "SpaceObject Mass: " << space_object_array[0].get_mass() << "\n"
-                << "SpaceObject Radius: " << space_object_array[0].get_radius() << "\n"
-                << "SpaceObject Position: (" << space_object_array[0].get_position().x
-                << ", " << space_object_array[0].get_position().y << ")\n"
-                << "SpaceObject Velocity: (" << space_object_array[0].get_velocity().x
-                << ", " << space_object_array[0].get_velocity().y << ")\n";
+    std::cout << "Testing all the getter methods:\n"
+              << "SpaceObject ID: " << space_object_array[0].get_id() << "\n"
+              << "SpaceObject Name: " << space_object_array[0].get_name() << "\n"
+              << "SpaceObject Mass: " << space_object_array[0].get_mass() << "\n"
+              << "SpaceObject Radius: " << space_object_array[0].get_radius() << "\n"
+              << "SpaceObject Position: (" << space_object_array[0].get_position().x
+              << ", " << space_object_array[0].get_position().y << ")\n"
+              << "SpaceObject Velocity: (" << space_object_array[0].get_velocity().x
+              << ", " << space_object_array[0].get_velocity().y << ")\n";
 
-    output_file  << "Testing all the getter methods:\n"
+    output_file << "Testing all the getter methods:\n"
                 << "SpaceObject ID: " << space_object_array[0].get_id() << "\n"
                 << "SpaceObject Name: " << space_object_array[0].get_name() << "\n"
                 << "SpaceObject Mass: " << space_object_array[0].get_mass() << "\n"
@@ -138,7 +138,7 @@ int main()
 
     space_object_array[1].print_info(std::cout);
     space_object_array[1].print_info(output_file);
-    
+
     std::cout << "Successful try block:\n";
     output_file << "Successful try block:\n";
 

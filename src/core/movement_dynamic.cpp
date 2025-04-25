@@ -6,23 +6,23 @@ const float MIN_DISTANCE_SQUARED = 1.0f;
 const float MAX_ACCELERATION = 1e5f;
 
 void DynamicMovementStrategy::update_velocity(const std::vector<const SpaceObject *> &others,
-    const float gravitational_constant, const float delta_time)
+                                              const float gravitational_constant, const float delta_time)
 {
 
     sf::Vector2f total_force{0.f, 0.f};
 
     for (const auto &other : others)
-    {   
+    {
         sf::Vector2f position_difference = other->get_position() - *position;
         float distance_squared = position_difference.x * position_difference.x + position_difference.y * position_difference.y;
 
         // Skip instances when objects are very close to eachother to avoid undefined behaviour
         // Also skips the instances when target and other is the same planet
-        if (distance_squared < MIN_DISTANCE_SQUARED) 
+        if (distance_squared < MIN_DISTANCE_SQUARED)
         {
             continue;
         }
-        
+
         // Calculate the magnitude of the gravitational force: force = G * target_mass * other_mass / distance_squared
         float force_magnitude = (gravitational_constant * *mass * other->get_mass()) / distance_squared;
 

@@ -3,6 +3,8 @@
 #include <SFML/System.hpp>
 
 #include "space_object.hpp"
+#include "movement/dynamic.hpp"
+#include "movement/static.hpp"
 
 class SpaceObject::SpaceObjectImpl
 {
