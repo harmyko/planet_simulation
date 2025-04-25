@@ -48,6 +48,11 @@ public:
     ~SpaceObjectImpl()
     {
         --object_count;
+        
+        if (movement_strategy != nullptr)
+        {
+            delete movement_strategy;
+        }
     }
 
     // Setters responsible for input validation
