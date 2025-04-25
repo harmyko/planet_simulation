@@ -5,7 +5,7 @@
 
 class SpaceObject;
 
-/**
+/** @brief
  * Abstract base class for movement strategies of space objects.
  *
  * Defines the interface for updating velocity and position of space objects.
@@ -19,7 +19,7 @@ protected:
     sf::Vector2f *velocity; ///< Pointer to the object's velocity
 
 public:
-    /**
+    /** @brief
      * Constructor to initialize the movement strategy with required pointers.
      *
      * @param mass_ptr Pointer to the object's mass.
@@ -32,7 +32,7 @@ public:
 
     virtual ~IMovementStrategy() = default;
 
-    /**
+    /** @brief
      * Updates the velocity based on the movement strategy.
      *
      * @param others List of other space objects.
@@ -42,7 +42,7 @@ public:
     virtual void update_velocity(const std::vector<const SpaceObject *> &others,
                                  const float gravitational_constant, const float delta_time) = 0;
 
-    /**
+    /** @brief
      * Updates the position based on the movement strategy.
      *
      * @param delta_time Time step for the update.

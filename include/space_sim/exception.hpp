@@ -4,7 +4,7 @@
 #include <stdexcept>
 #include <string>
 
-/**
+/** @brief
  * Exception class for handling errors related to SpaceObject.
  *
  * This class extends `std::runtime_error` to provide a custom exception for errors
@@ -13,7 +13,7 @@
 class SpaceObjectException : public std::runtime_error
 {
 public:
-    /**
+    /** @brief
      * Constructs a SpaceObjectException with a given message.
      *
      * @param message The error message to describe the exception.

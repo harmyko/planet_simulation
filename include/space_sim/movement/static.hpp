@@ -3,7 +3,7 @@
 
 #include "i_movement_strategy.hpp"
 
-/**
+/** @brief
  * Movement strategy for static objects with fixed position and velocity.
  *
  * Does not change the position or velocity of the space object.
@@ -11,7 +11,7 @@
 class StaticMovementStrategy : public IMovementStrategy
 {
 public:
-    /**
+    /** @brief
      * Constructor that initializes the static movement strategy.
      *
      * @param mass_ptr Pointer to the object's mass.
@@ -22,7 +22,7 @@ public:
     StaticMovementStrategy(double *mass_ptr, double *radius_ptr, sf::Vector2f *position_ptr, sf::Vector2f *velocity_ptr)
         : IMovementStrategy(mass_ptr, radius_ptr, position_ptr, velocity_ptr) {}
 
-    /**
+    /** @brief
      * Sets the objects velocity to zero.
      *
      * @param others List of other space objects.
@@ -32,7 +32,7 @@ public:
     void update_velocity(const std::vector<const SpaceObject *> &others,
                          const float gravitational_constant, const float delta_time) override;
 
-    /**
+    /** @brief
      * Does not update the position for static objects.
      *
      * @param delta_time Time step for the update.

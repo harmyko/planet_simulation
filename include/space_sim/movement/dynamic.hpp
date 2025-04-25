@@ -3,7 +3,7 @@
 
 #include "i_movement_strategy.hpp"
 
-/**
+/** @brief
  * Movement strategy for dynamic movement based on gravitational forces.
  *
  * Updates velocity and position of a space object considering gravitational forces from other objects.
@@ -11,7 +11,7 @@
 class DynamicMovementStrategy : public IMovementStrategy
 {
 public:
-    /**
+    /** @brief
      * Constructor that initializes the dynamic movement strategy.
      *
      * @param mass_ptr Pointer to the object's mass.
@@ -22,7 +22,7 @@ public:
     DynamicMovementStrategy(double *mass_ptr, double *radius_ptr, sf::Vector2f *position_ptr, sf::Vector2f *velocity_ptr)
         : IMovementStrategy(mass_ptr, radius_ptr, position_ptr, velocity_ptr) {}
 
-    /**
+    /** @brief
      * Updates the velocity based on gravitational interactions with other objects.
      *
      * @param others List of other space objects in the universe for gravitational calculation.
@@ -32,7 +32,7 @@ public:
     void update_velocity(const std::vector<const SpaceObject *> &others,
                          const float gravitational_constant, const float delta_time) override;
 
-    /**
+    /** @brief
      * Updates the position based on the object's velocity.
      *
      * @param delta_time Time step for the update.
