@@ -1,3 +1,19 @@
+# Space Object Simulation
+
+The final project is a simulation module for space objects, focusing on planet movement. It includes both fun demos, like a Solar System simulation and random object scenarios, where different behaviors are showcased. Link to a video of a demonstration: https://youtu.be/1wfd2mcjHaU?si=MOSo9OklxCWDw5r-
+
+Make sure you have the SFML library installed. Then you can build the module and run the tests on a Windows system by opening a terminal in the project directory and entering the following commands:
+
+```
+make all
+cd bin
+.\test.exe 
+.\solar_system.exe
+.\random_objects.exe
+```
+
+It originally was my personal project for an Individualised Study module "Object-Oriented Programming (C++)" in Vilnius University. Graded by Viktoras Golubevas. Below is a documentation in Lithuanian of my process creating this module.
+
 # Dangaus kūnų simuliacija
 
 ## Projekto tikslas: 
