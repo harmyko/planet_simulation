@@ -31,7 +31,7 @@ Programa gali būti paleidžiama nuėjus į projekto katalogą su terminalu ir p
 
 ```
 make
-./PlanetSimulation.exe
+.\PlanetSimulation.exe
 ```
 
 ## M2 - antrasis etapas (2025.04.04)
@@ -55,18 +55,55 @@ Programa, nuėjus terminalu į projekto katalogą, gali būti paleidžiama kelia
 1. Sukuriant testinės programos versiją pasinaudojant moduliu, kuris **nenaudoja** išmaniųjų rodyklių:
 ```
 make raw
-./PlanetRawPtrTest.exe
+.\PlanetRawPtrTest.exe
 ```
 
 2. Sukuriant testinės programos versiją pasinaudojant moduliu, kurio veikimas remiasi moderniomis C++ funkcijomis ir **panaudoja išmaniasias rodykles**:
 ```
 make unique
-./PlanetUniquePtrTest.exe
+.\PlanetUniquePtrTest.exe
 ```
 
 3. Sukuriant tiek pirmame, tiek antrame punkte paminėtus modulius bei programas:
 ```
 make
-./PlanetRawPtrTest.exe
-./PlanetUniquePtrTest.exe
+.\PlanetRawPtrTest.exe
+.\PlanetUniquePtrTest.exe
+```
+
+## M3 - trečiasis etapas (2025.04.25)
+
+Šiame etape pabaigiau savo modulį, paruošiau jį įtraukimui į kitus projektus, sukūriau dokumentaciją bei pademonstravau jo veikimą.
+
+### Atlikti darbai
+
+✅ Išskaidžiau savo klasę į dvi dalis: **kintamą ir pastovią**. Kintamąjai apibrėžiau abstrakčią klasę IMovementStrategy. 
+
+✅ Interfeisą **išskaidžiau į dvi realizacijas**: StaticMovementStrategy ir DynamicMovementStrategy, kurios pasirenkamos pagal nutylėjimą, tačiau galima keisti realizaciją vykdymo metu.
+
+✅ Įdiegiau galimybę **keisti realizaciją** neprarandant duomenų (abi realizacijos turi bendrą lauką).
+
+✅ **Parašiau operatorius** >> ir <<, leidžiančius išsaugoti ir atkurti objektus iš binarinio failo.
+
+✅ **Papildžiau testus** (failas test.cpp), kurie tikrina, ar realizacijų keitimas ir serializacija veikia tinkamai.
+
+✅ Parašiau **modulio dokumentaciją** ir pasinaudojau Doxygen įrankiu, kad sugeneruoti galutinį PDF. Sukūriau UML klasių diagramą.
+
+✅ Sukūriau **tris** demonstracijas: solar_system.cpp, random_objects.cpp ir test.cpp (pastarasis buvo reikalingas, bet kitus sukūriau asmeniniam malonumui).
+
+### Modulio funkcionalumo demonstracija
+**Video**: https://youtu.be/1wfd2mcjHaU
+
+
+### Modulio kompiliavimas ir testų paleidimas (M3 ver.)
+
+Programa gali būti paleidžiama Windows operacinės sistemos įrenginyje nuėjus į projekto katalogą su terminalu ir paleidus šias komandas:
+
+```
+make all
+cd bin
+.\test.exe 
+.\solar_system.exe
+.\random_objects.exe
+```
 ```
