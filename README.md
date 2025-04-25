@@ -94,6 +94,9 @@ make
 ### Modulio funkcionalumo demonstracija
 **Video**: https://youtu.be/1wfd2mcjHaU
 
+### UML klasių diagrama
+
+![Image](space_sim_class_diagram.png)
 
 ### Modulio kompiliavimas ir testų paleidimas (M3 ver.)
 
@@ -106,4 +109,5 @@ cd bin
 .\solar_system.exe
 .\random_objects.exe
 ```
-```
+
+### Smagaus naudojimo!
