@@ -1,6 +1,6 @@
 # Space Object Simulation
 
-A simulation module for space objects. It uses famous physics formulas to simulate their movement in space. It includes a few fun demos, like a Solar System simulation and a random object sandbox, where different behaviors are showcased. Link to a video of a demonstration: https://youtu.be/1wfd2mcjHaU?si=MOSo9OklxCWDw5r-
+A module made for space objects. It uses famous physics formulas to simulate their movement in space. It includes a few fun demos, like a Solar System simulation and a random object sandbox, where different behaviors are showcased. Link to a video of a demonstration: https://youtu.be/1wfd2mcjHaU
 
 Make sure you have the SFML library installed. Then you can build the module and run the tests on a Windows system by opening a terminal in the project directory and entering the following commands:
 
