@@ -27,8 +27,13 @@ TARGETS = \
 	$(BIN_DIR)/solar_system.exe \
 	$(BIN_DIR)/test.exe
 
+# Ensure required directories exist
+$(BUILD_DIR) $(BIN_DIR):
+	mkdir $(BUILD_DIR) 2> nul || true
+	mkdir $(BIN_DIR) 2> nul || true
+
 # Default target
-all: $(TARGETS)
+all: $(BUILD_DIR) $(BIN_DIR) $(TARGETS)
 
 # Individual executable builds
 $(BIN_DIR)/random_objects.exe: $(MAIN_DIR)/random_objects.cpp $(OBJS)

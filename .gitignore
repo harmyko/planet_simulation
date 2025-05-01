@@ -4,3 +4,5 @@
 *.txt
 *.dat
 latex
+bin
+build
