@@ -112,7 +112,7 @@ make
 
 ### UML klasių diagrama
 
-![Image](space_sim_class_diagram.png)
+![Image](resources/space_sim_class_diagram.png)
 
 ### Modulio kompiliavimas ir testų paleidimas (M3 ver.)
 
